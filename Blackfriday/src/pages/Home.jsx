@@ -1,10 +1,11 @@
 import React from 'react'
 import Wrapper from '../Components/Wrapper'
 import { useGetPokemonByNameQuery } from '../services/productApi'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 const Home = () => {
-  const {data} = useGetPokemonByNameQuery()
+  const param = useLocation()
+  const {data} = useGetPokemonByNameQuery(param.search)
   console.log("all product",data)
   return (
     <>

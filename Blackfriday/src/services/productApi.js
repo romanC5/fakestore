@@ -7,7 +7,7 @@ export const productApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: 'https://api.escuelajs.co/api/v1' }),
   endpoints: (builder) => ({
     getPokemonByName: builder.query({
-      query: () => `/products`,
+      query: (param) => `/products/${param}`,
       method: 'GET'
     }),
     getPokemonById: builder.query({
