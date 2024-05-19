@@ -1,64 +1,138 @@
 import React from 'react'
-
+import { useForm } from "react-hook-form"
+import { useFormpostMutation } from '../services/productApi';
 const Login = () => {
+  const [Login, {isLoading, isError} ] = useFormpostMutation()
+
+  const { register, handleSubmit, watch, reset, formState: { errors } } = useForm(); 
   
+  const onSubmit = async (formData) => {
+      console.log(formData)
+      try {
+          await Login(formData).unwrap() 
+          reset()
 
-
-
+      } catch (err) {
+          console.log(err) 
+      }
+  } 
   return (
     <>
-  <section class="bg-blueGray-50">
-  <div class="w-full lg:w-4/12 px-4 mx-auto pt-6">
-    <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200 border-0">
-      <div class="rounded-t mb-0 px-6 py-6">
-        <div class="text-center mb-3">
-          <h6 class="text-blueGray-500 text-sm font-bold">
-            Sign in with
-          </h6>
-        </div>
-        <div class="btn-wrapper text-center">
-          <button class="bg-white active:bg-blueGray-50 text-blueGray-700 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-2 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150" type="button">
-            <img alt="..." class="w-5 mr-1" src="https://demos.creative-tim.com/notus-js/assets/img/github.svg"/>Github</button>
-          <button class="bg-white active:bg-blueGray-50 text-blueGray-700 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150" type="button">
-            <img alt="..." class="w-5 mr-1" src="https://demos.creative-tim.com/notus-js/assets/img/google.svg"/>Google </button>
+      {/* <form onSubmit={handleSubmit(onSubmit)} className='border-2 px-4 py-4 mx-4 my-4'>
+                 <h1 className='flex place-items-center'>Login</h1>
+                <label htmlFor="">Date</label>
+                <input type='text' {...register("emali")} placeholder='name' class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" /> <br />
+                <label htmlFor="">Products</label>
+                <input {...register("password", { required: true })} placeholder='price' class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" /> <br />
+                {errors.exampleRequired && <span>This field is required</span>}
+                <button type='submit' className=''>submit</button>
+            </form> */}
 
-        </div>
-        <hr class="mt-6 border-b-1 border-blueGray-300"/>
-      </div>
-      <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
-        <div class="text-blueGray-400 text-center mb-3 font-bold">
-          <small>Or sign in with credentials</small>
-        </div>
-        <form>
-          <div class="relative w-full mb-3">
-            <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="grid-password">Email</label><input type="email" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" placeholder="Email"/>
-          </div>
-          <div class="relative w-full mb-3">
-            <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="grid-password">Password</label><input type="password" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" placeholder="Password"/>
-          </div>
-          <div>
-            <label class="inline-flex items-center cursor-pointer"><input id="customCheckLogin" type="checkbox" class="form-checkbox border-0 rounded text-blueGray-700 ml-1 w-5 h-5 ease-linear transition-all duration-150"/><span class="ml-2 text-sm font-semibold text-blueGray-600">Remember me</span></label>
-          </div>
-          <div class="text-center mt-6">
-            <button class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150" type="button"> Sign In </button>
-          </div>
-        </form>
-      </div>
+            <form onSubmit={handleSubmit(onSubmit)}>
+            <div class="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div class="sm:mx-auto sm:w-full sm:max-w-md">
+        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+            Sign in to your account
+        </h2>
+        <p class="mt-2 text-center text-sm text-gray-600 max-w">
+            Or
+            <a href="#" class="font-medium text-blue-600 hover:text-blue-500">
+                create an account
+            </a>
+        </p>
     </div>
-  </div>
-  {/* <footer class="relative pt-8 pb-6 mt-2">
-    <div class="container mx-auto px-2">
-      <div class="flex flex-wrap items-center md:justify-between justify-center">
-        <div class="w-full md:w-6/12 px-4 mx-auto text-center">
-          <div class="text-sm text-blueGray-500 font-semibold py-1">
-            Made with <a href="https://www.creative-tim.com/product/notus-js" class="text-blueGray-500 hover:text-gray-800" target="_blank">Notus JS</a> by <a href="https://www.creative-tim.com" class="text-blueGray-500 hover:text-blueGray-800" target="_blank"> Creative Tim</a>.
-          </div>
-        </div>
-      </div>
-    </div>
-  </footer> */}
-</section>
 
+    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+            <form class="space-y-6" action="#" method="POST">
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700">
+                        Email address
+                    </label>
+                    <div class="mt-1">
+                        <input id="email" name="email" type="email" autocomplete="email" required {...register("emali")}
+                            class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                            placeholder="Enter your email address"/>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700">
+                        Password
+                    </label>
+                    <div class="mt-1">
+                        <input id="password" name="password" type="password" autocomplete="current-password" required {...register("password", { required: true })}
+                            class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                            placeholder="Enter your password"/>
+                            {errors.exampleRequired && <span>This field is required</span>}
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input id="remember_me" name="remember_me" type="checkbox"
+                            class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"/>
+                        <label for="remember_me" class="ml-2 block text-sm text-gray-900">
+                            Remember me
+                        </label>
+                    </div>
+
+                    <div class="text-sm">
+                        <a href="#" class="font-medium text-blue-600 hover:text-blue-500">
+                            Forgot your password?
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <button type="submit"
+                        class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+
+                        Sign in
+                    </button>
+                </div>
+            </form>
+            <div class="mt-6">
+
+                <div class="relative">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-gray-300"></div>
+                    </div>
+                    <div class="relative flex justify-center text-sm">
+                        <span class="px-2 bg-gray-100 text-gray-500">
+                            Or continue with
+                        </span>
+                    </div>
+                </div>
+
+                <div class="mt-6 grid grid-cols-3 gap-3">
+                    <div>
+                        <a href="#"
+                            class="w-full flex items-center justify-center px-8 py-3 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                            <img class="h-5 w-5" src="https://www.svgrepo.com/show/512120/facebook-176.svg"
+                                alt=""/>
+                        </a>
+                    </div>
+                    <div>
+                        <a href="#"
+                            class="w-full flex items-center justify-center px-8 py-3 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                            <img class="h-5 w-5" src="https://www.svgrepo.com/show/513008/twitter-154.svg"
+                                alt=""/>
+                        </a>
+                    </div>
+                    <div>
+                        <a href="#"
+                            class="w-full flex items-center justify-center px-8 py-3 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                            <img class="h-6 w-6" src="https://www.svgrepo.com/show/506498/google.svg"
+                                alt=""/>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</form>
     </>
   )
 }

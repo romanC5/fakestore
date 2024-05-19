@@ -10,11 +10,13 @@ const Shop = () => {
      backgroundPosition: "top",
 
   }  
+  
   const param = useLocation()
   const {data} = useGetPokemonByNameQuery(param.search)
-  console.log(data)
+  console.log("all product",data)
+
   const {data: category} = useGetCategoryByNameQuery()
-  console.log(category)
+  console.log("category data",category)
   
   return (
     <>
